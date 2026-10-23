@@ -1,0 +1,188 @@
+body {
+  box-sizing: border-box;
+  font-size: 17px;
+}
+
+.container {
+  display: flex;
+  position: relative;
+  max-width: 1200px;
+  width: 100%;
+  background-color: #bbbbbb33;
+  padding: 20px;
+  flex-direction: column;
+}
+
+.tl-head{
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  height: 30px;
+  background-color: #bbbbbb57;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  font-size: 22px;
+}
+
+.messages-container {
+  overflow-y: auto;
+  display: flex;
+  background-image: url('../img/kletka.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 10px;
+  flex-direction: column;
+  align-items: flex-end;
+  border: 2px solid rgba(0, 0, 0, 0.75);
+  flex: 1;
+  min-height: 500px;
+}
+
+.composer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 15px;
+  flex-wrap: nowrap;
+}
+.composer .input-text {
+  flex: 1;
+  resize: none;
+}
+
+.input-text {
+  background-color: white;
+  border: 2px solid rgba(0, 0, 0, 0.75);
+}
+
+.btn-audio {
+  width: 45px;
+  height: 45px;
+  background-image: url('../img/microphone.png');
+  background-repeat: no-repeat;
+  background-size: 70%;
+  background-position: center;
+  border-radius: 50%;
+}
+
+.btn-video {
+  width: 45px;
+  height: 45px;
+  background-image: url('../img/camera.png');
+  background-repeat: no-repeat;
+  background-size: 70%;
+  background-position: center;
+  border-radius: 50%;
+}
+
+.post-txt-container {
+  background-color: white;
+}
+
+.modal-geo{
+  position:fixed;
+  border: 2px solid rgba(0, 0, 0, 0.75);
+  border-radius: 10px;
+  background-color: white;
+  display: none;                                 /* none  */
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  max-width: 500px;
+  width: 100%;
+  overflow: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.active-geo {
+  display: flex;
+}
+
+p {
+  padding: 5px;
+}
+
+.geo-label {
+  margin-bottom: 10px;
+}
+
+.geo-input {
+  padding: 5px;
+  width: 100%;
+  border: 2px solid rgba(0, 0, 0, 0.75);
+  border-radius: 10px;
+}
+
+.geo-btn-container {
+  display: flex;
+  align-self: flex-end;
+  margin-top: 10px;
+  gap: 10px;
+}
+
+.geo-btn-cancel,
+.geo-btn-save,
+.input {
+  padding: 10px;
+  background-color: white;
+  border: 2px solid rgba(0, 0, 0, 0.75);
+  border-radius: 10px;
+}
+
+.post-txt-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  background-color: white;
+  border: 2px solid rgba(0, 0, 0, 0.75);
+  border-radius: 10px;
+}
+
+.created-txt {
+  display: flex;
+  align-self: flex-end;
+}
+
+.text-post {
+  display: flex;
+  align-items: flex-start;
+  padding: 10px;
+}
+
+.txt-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px;
+}
+
+.txt-coordinates {
+  border: none;
+}
+
+.txt-viewed {
+  display: none;
+  width: 16px;
+  height: 16px;
+  background-image: url('../img/viewed.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+}
+
+.txt-viewed.active-txt-viewed {
+  display: block;
+}
+
+.geo-input_error {
+  display: none;
+  border-color: red;
+  color: red;
+}
