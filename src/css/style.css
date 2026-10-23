@@ -83,7 +83,10 @@ h1 {
 }
 
 .modal-geo{
-  position:fixed;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   border: 2px solid rgba(0, 0, 0, 0.75);
   border-radius: 10px;
   background-color: white;
@@ -112,6 +115,7 @@ p {
 }
 
 .geo-input {
+  box-sizing: border-box;
   padding: 5px;
   width: 100%;
   border: 2px solid rgba(0, 0, 0, 0.75);
@@ -126,8 +130,7 @@ p {
 }
 
 .geo-btn-cancel,
-.geo-btn-save,
-.input {
+.geo-btn-save {
   padding: 10px;
   background-color: white;
   border: 2px solid rgba(0, 0, 0, 0.75);
@@ -182,7 +185,17 @@ p {
 }
 
 .geo-input_error {
-  display: none;
   border-color: red;
+
+}
+
+.geo-error {
+  display: none;
   color: red;
+  font-size: 14px;
+  margin: 8px 0 0;
+}
+
+.geo-error.is-visible {
+  display: block;
 }

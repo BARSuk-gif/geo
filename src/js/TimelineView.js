@@ -7,48 +7,42 @@ export default class TimelineView {
   mount() {
     this.tlContainer = document.createElement('div');
     this.tlContainer.className = 'container';
-    this.container.appendChild(this.tlContainer);
+    this.container.append(this.tlContainer);
 
     this.tlHead = document.createElement('div');
     this.tlHead.className = 'tl-head';
-    this.tlContainer.appendChild(this.tlHead);
+    this.tlContainer.append(this.tlHead);
 
     this.tlHeadName = document.createElement('h1');
     this.tlHeadName.textContent = 'Timeline';
-    this.tlHead.appendChild(this.tlHeadName);
+    this.tlHead.append(this.tlHeadName);
 
     // Контейнер сообщений
     this.messages = document.createElement('div');
     this.messages.className = 'messages-container';
-    this.tlContainer.appendChild(this.messages);
+    this.tlContainer.append(this.messages);
 
     // Поле ввода
     this.composer = document.createElement('form');
     this.composer.className = 'composer';
-    this.tlContainer.appendChild(this.composer);
+    this.tlContainer.append(this.composer);
 
     this.inputText = document.createElement('textarea');
     this.inputText.className = 'input-text';
     this.inputText.placeholder = 'Сообщение';
-    this.composer.appendChild(this.inputText);
-
-    this.input = document.createElement('input');
-    this.input.type = 'submit';
-    this.input.value = 'Отправить';
-    this.input.className = 'input';
-    this.composer.appendChild(this.input);
+    this.composer.append(this.inputText);
 
     this.btnAudio = document.createElement('button');
     this.btnAudio.type = 'button';
     this.btnAudio.className = 'btn-audio';
     this.btnAudio.setAttribute('aria-label', 'Голосовое сообщение');
-    this.composer.appendChild(this.btnAudio);
+    this.composer.append(this.btnAudio);
 
     this.btnVideo = document.createElement('button');
     this.btnVideo.type = 'button';
     this.btnVideo.className = 'btn-video';
     this.btnVideo.setAttribute('aria-label', 'Камера');
-    this.composer.appendChild(this.btnVideo);
+    this.composer.append(this.btnVideo);
 
     this.createModalGeo();
   }
@@ -56,58 +50,63 @@ export default class TimelineView {
   createModalGeo() {
     this.modalGeo = document.createElement('div');
     this.modalGeo.className = 'modal-geo';
-    this.tlContainer.appendChild(this.modalGeo);
+    this.tlContainer.append(this.modalGeo);
 
     this.geoTxt1 = document.createElement('p');
     this.geoTxt1.textContent = 'Что-то пошло не так ... ';
-    this.modalGeo.appendChild(this.geoTxt1);
+    this.modalGeo.append(this.geoTxt1);
 
     this.geoTxt2 = document.createElement('p');
     this.geoTxt2.textContent = 'К сожалению, не удалось определить ваше местоположение. '
       + 'Дайте разрешение на геолокацию либо введите координаты вручную.';
-    this.modalGeo.appendChild(this.geoTxt2);
+    this.modalGeo.append(this.geoTxt2);
 
     this.geoLabel = document.createElement('label');
     this.geoLabel.className = 'geo-label';
     this.geoLabel.textContent = 'Широта и долгота через запятую';
-    this.modalGeo.appendChild(this.geoLabel);
+    this.modalGeo.append(this.geoLabel);
 
     this.geoInputCoordinates = document.createElement('input');
     this.geoInputCoordinates.type = 'text';
     this.geoInputCoordinates.className = 'geo-input';
-    this.geoInputCoordinates.ariaPlaceholder = '[55.6758, -35,4557]';
-    this.modalGeo.appendChild(this.geoInputCoordinates);
+    this.geoInputCoordinates.placeholder = '[55.6758, -35,4557]';
+    this.modalGeo.append(this.geoInputCoordinates);
+
+    // Пользователь начал править ввод — убираем прошлую ошибку
+    this.geoInputCoordinates.addEventListener('input', () => {
+      this.hideGeoError();
+    });
 
     this.geoError = document.createElement('p');
     this.geoError.className = 'geo-error';
-    this.modalGeo.appendChild(this.geoError);
+    this.modalGeo.append(this.geoError);
 
     this.geoBtnContainer = document.createElement('div');
     this.geoBtnContainer.className = 'geo-btn-container';
-    this.modalGeo.appendChild(this.geoBtnContainer);
+    this.modalGeo.append(this.geoBtnContainer);
 
     this.btnGeoCancel = document.createElement('button');
     this.btnGeoCancel.className = 'geo-btn-cancel';
     this.btnGeoCancel.type = 'button';
     this.btnGeoCancel.textContent = 'Отмена';
-    this.geoBtnContainer.appendChild(this.btnGeoCancel);
+    this.geoBtnContainer.append(this.btnGeoCancel);
 
     this.btnGeoSave = document.createElement('button');
     this.btnGeoSave.className = 'geo-btn-save';
     this.btnGeoSave.type = 'button';
     this.btnGeoSave.textContent = 'Ok';
-    this.geoBtnContainer.appendChild(this.btnGeoSave);
+    this.geoBtnContainer.append(this.btnGeoSave);
   }
 
   showGeoError(message) {
     this.geoError.textContent = message;
-    this.geoError.style.display = 'block';
+    this.geoError.classList.add('is-visible');
     this.geoInputCoordinates.classList.add('geo-input_error');
   }
 
   hideGeoError() {
     this.geoError.textContent = '';
-    this.geoError.style.display = 'none';
+    this.geoError.classList.remove('is-visible');
     this.geoInputCoordinates.classList.remove('geo-input_error');
   }
 
@@ -129,32 +128,34 @@ export default class TimelineView {
     postTxtContainer.className = 'post-txt-container';
     this.messages.prepend(postTxtContainer);
 
+    const pad = (n) => String(n).padStart(2, '0');
+    const d = date;
+    const formatted = `${pad(d.getDate())}.${pad(d.getMonth() + 1)}.${d.getFullYear()} `
+      + `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+
     const createdTxtPost = document.createElement('time');
     createdTxtPost.className = 'created-txt';
     createdTxtPost.dateTime = date.toISOString();
-    createdTxtPost.textContent = date.toLocaleTimeString('ru-RU', {
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-    postTxtContainer.appendChild(createdTxtPost);
+    createdTxtPost.textContent = formatted;
+    postTxtContainer.append(createdTxtPost);
 
     const textPost = document.createElement('div');
     textPost.className = 'text-post';
     textPost.textContent = text;
-    postTxtContainer.appendChild(textPost);
+    postTxtContainer.append(textPost);
 
     const textInfoRow = document.createElement('div');
     textInfoRow.className = 'txt-info';
-    postTxtContainer.appendChild(textInfoRow);
+    postTxtContainer.append(textInfoRow);
 
     const postTxtCoordinates = document.createElement('div');
     postTxtCoordinates.className = 'txt-coordinates';
     postTxtCoordinates.textContent = coords;
-    textInfoRow.appendChild(postTxtCoordinates);
+    textInfoRow.append(postTxtCoordinates);
 
     const postTxtViewed = document.createElement('div');
     postTxtViewed.className = 'txt-viewed';
-    textInfoRow.appendChild(postTxtViewed);
+    textInfoRow.append(postTxtViewed);
 
     this.messages.scrollTop = 0;
 

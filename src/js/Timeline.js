@@ -18,6 +18,7 @@ export default class Timeline {
     this.view.composer.addEventListener('submit', this.onCreateMessage);
     this.view.btnGeoSave.addEventListener('click', this.onSaveGeoCoords);
     this.view.btnGeoCancel.addEventListener('click', this.onCloseGeo);
+    this.view.inputText.addEventListener('keydown', this.onInputKeydown);
   }
 
   onCreateMessage = async (e) => {
@@ -38,6 +39,15 @@ export default class Timeline {
       this.pendingText = message;
       this.view.clearGeoInput();
       this.view.showGeoModal();
+    }
+  };
+
+  onInputKeydown = (e) => {
+    // Enter без Shift — отправить.
+    // Shift+Enter — оставить как перенос строки.
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      this.view.composer.requestSubmit();
     }
   };
 
